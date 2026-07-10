@@ -190,6 +190,44 @@ https://andy.mindcraft-ce.com/signup
 
 ---
 
+### `--api`
+
+Force the router to use the Andy API, bypassing all compute capability and benchmark checks.
+
+Example:
+
+```bash
+andy-router --api
+```
+
+---
+
+### `--model` or `-m`
+
+Specify a custom local model to run, bypassing auto-detection.
+
+Allowed values are:
+* `micro` (resolves to `Mindcraft-CE/Andy-4.2-Micro-GGUF`)
+* `air` (resolves to `Mindcraft-CE/Andy-4.2-Air-GGUF`)
+* `ye` (resolves to `Mindcraft-CE/Andy-4.2-GGUF`)
+
+> [!IMPORTANT]
+> The `--model` flag cannot be used at the same time as `--api` because these models are only supported for local inference. If you specify both, the router will fail with a configuration conflict error.
+
+Example:
+
+```bash
+andy-router --model micro
+```
+
+Or using the `-m` shorthand:
+
+```bash
+andy-router -m air
+```
+
+---
+
 ## Model Selection
 
 When running locally, andy-router automatically chooses a model based on benchmark results.

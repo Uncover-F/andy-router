@@ -20,6 +20,8 @@ import (
 
 var port int = 8000
 var key string = ""
+var model string = ""
+var forceAPI bool = false
 
 func main() {
 	// Accept flags
@@ -44,10 +46,38 @@ func main() {
 			}
 			key = os.Args[i+1]
 			i++
+		case "--api":
+			forceAPI = true
+		case "--model", "-m":
+			if i+1 >= len(os.Args) {
+				log.Fatal("missing value for --model: expected a model name")
+			}
+			val := os.Args[i+1]
+			switch val {
+			case "Andy-4.2-Micro":
+				model = "Mindcraft-CE/Andy-4.2-Micro-GGUF"
+			case "Andy-4.2-Air":
+				model = "Mindcraft-CE/Andy-4.2-Air-GGUF"
+			case "Andy-4.2":
+				model = "Mindcraft-CE/Andy-4.2-GGUF"
+			default:
+				log.Fatalf("invalid model name %q: must be one of: Andy-4.2-Micro, Andy-4.2-Air, Andy-4.2", val)
+			}
+			i++
 		}
 	}
 
+	if forceAPI && model != "" {
+		log.Fatal("conflict: cannot specify both --api and --model. Selected models (micro, air, ye) are only supported for local inference.")
+	}
+
 	log.Info("starting andy-router...")
+
+	if forceAPI {
+		log.Info("force API enabled, bypassing compute checks")
+		andyAPI(port, key)
+		return
+	}
 
 	// Check if client is capable of using llama.cpp
 	v, err := mem.VirtualMemory()
@@ -76,6 +106,12 @@ func llamaRuntime(port int) {
 		}
 	}
 
+	if model != "" {
+		log.Info("using user-specified model", "model", model)
+		llamaServer(model, port)
+		return
+	}
+
 	tps, err := utils.Benchmark()
 	if err != nil {
 		log.Error("failed to benchmark performance, falling back to andyAPI", "error", err)
@@ -85,7 +121,7 @@ func llamaRuntime(port int) {
 		log.Info("benchmark results", "tps", tps)
 	}
 
-	if tps < 300 {
+	if tps < 30000 {
 		log.Warn("weak performance detected, falling back to andyAPI")
 		andyAPI(port, key)
 		return
@@ -103,7 +139,11 @@ func llamaRuntime(port int) {
 }
 
 func andyAPI(port int, key string) {
-	log.Info("starting andyAPI...", "model", "auto", "port", port)
+	modelLog := "auto"
+	if model != "" {
+		modelLog = model
+	}
+	log.Info("starting andyAPI...", "model", modelLog, "port", port)
 	if key == "" {
 		log.Warn("API key not provided, daily limits will apply. get an API key at: https://andy.mindcraft-ce.com/signup")
 	} else {
@@ -148,7 +188,7 @@ func andyAPI(port int, key string) {
 func llamaServer(modelName string, port int) {
 	log.Info("starting llama server... (this may take a while)", "model", modelName, "port", port)
 
-	cmd := exec.Command("llama", "server", "-hf", modelName, "--port", strconv.Itoa(port))
+	cmd := exec.Command("llama", "server", "-hf", modelName, "--port", strconv.Itoa(port), "--chat-template", "chatml")
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -211,16 +251,18 @@ func verifyAndyKey(key string) (bool, error) {
 
 func printHelp() {
 	fmt.Println(`
-andy-router-v1.0.0 - made by @Uncover-F
+andy-router-v1.1.0 - made by @Uncover-F
 discord support: https://discord.gg/mindcraft-ce
 
 example CURL request: curl http://127.0.0.1:8000/v1/chat/completions -H "Content-Type: application/json" -d '{"model":"auto","messages":[{"role":"user","content":"Hello, who are you?"}]}'
 
 Usage:
-andy-router [--port PORT] [--key KEY] [--help]
+andy-router [--port PORT] [--key KEY] [--api] [--model MODEL] [--help]
 
 Options:
---port PORT   Local port to bind to (default: 8000)
---key KEY     Optional Andy API key
---help, -h    Show this help message`)
+--port PORT         Local port to bind to (default: 8000)
+--key KEY           Optional Andy API key
+--api               Force using the Andy API regardless of compute
+--model, -m MODEL   Specify a model to use (bypasses auto-detection)
+--help, -h          Show this help message`)
 }
