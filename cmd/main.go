@@ -211,7 +211,7 @@ func verifyAndyKey(key string) (bool, error) {
 
 func printHelp() {
 	fmt.Println(`
-andy-router-v1.0 - made by @Uncover-F
+andy-router-v1.0.0 - made by @Uncover-F
 discord support: https://discord.gg/mindcraft-ce
 
 example CURL request: curl http://127.0.0.1:8000/v1/chat/completions -H "Content-Type: application/json" -d '{"model":"auto","messages":[{"role":"user","content":"Hello, who are you?"}]}'

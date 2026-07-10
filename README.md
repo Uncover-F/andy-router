@@ -58,6 +58,49 @@ Instead of manually choosing models, configuring local runtimes, managing downlo
 
 ## Installation
 
+## Downloads
+
+Pre-built binaries are available for Windows, macOS, and Linux.
+
+Download the latest release for your platform:
+
+| Platform | Architecture  | File                            |
+| -------- | ------------- | ------------------------------- |
+| Windows  | x64           | `andy-router-windows-amd64.exe` |
+| Windows  | ARM64         | `andy-router-windows-arm64.exe` |
+| Linux    | x64           | `andy-router-linux-amd64`       |
+| Linux    | ARM64         | `andy-router-linux-arm64`       |
+| macOS    | Intel         | `andy-router-darwin-amd64`      |
+| macOS    | Apple Silicon | `andy-router-darwin-arm64`      |
+
+After downloading:
+
+### Linux / macOS
+
+Make the binary executable:
+
+```bash
+chmod +x andy-router
+```
+
+Run:
+
+```bash
+./andy-router
+```
+
+### Windows
+
+Run:
+
+```powershell
+andy-router-windows-amd64.exe
+```
+
+---
+
+## Building From Source
+
 Clone the repository:
 
 ```bash
