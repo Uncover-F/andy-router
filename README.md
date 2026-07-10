@@ -244,6 +244,43 @@ print(response.choices[0].message.content)
 
 ---
 
+## Mindcraft-CE Integration
+
+To run **andy-router** as the LLM backend for a **Mindcraft-CE** bot, you can configure your bot's profile to route request completions to the router's local endpoint.
+
+### Example profile.json
+```json
+{
+    "name": "andy-router",
+
+    "model": {
+        "api": "vllm",
+        "model": "auto",
+        "url": "http://127.0.0.1:8000/v1"
+    }
+}
+```
+
+### Steps to Use
+
+1. **Start the Router**:
+   Ensure `andy-router` is running:
+   ```bash
+   andy-router
+   ```
+2. **Configure Bot Profile**:
+   Copy the json config (or merge its settings) into the `profiles/` directory of your Mindcraft-CE project (e.g., `profiles/profile.json`).
+   
+   > [!IMPORTANT]
+   > The `"name"` field in your profile JSON must exactly match the Minecraft username of the account your bot is using. Change `"andy-router"` in the template to your bot's actual in-game name to avoid communication issues.
+
+3. **Launch the Bot**:
+   Run the bot from the Mindcraft-CE project directory using the `--profiles` flag:
+   ```bash
+   node main.js --profiles ./profiles/profile.json
+   ```
+---
+
 ## Why use andy-router?
 
 Using AI models often requires knowing:
