@@ -67,7 +67,7 @@ func main() {
 func llamaRuntime(port int) {
 	err := exec.Command("llama").Run()
 	if err != nil {
-		log.Info("installing llama.cpp...")
+		log.Info("installing llama.cpp... (this may take a while)")
 		err = installer.InstallLlama()
 		if err != nil {
 			log.Error("failed to install llama.cpp, falling back to andyAPI", "error", err)
@@ -146,7 +146,7 @@ func andyAPI(port int, key string) {
 // HELPER FUNCTIONS
 
 func llamaServer(modelName string, port int) {
-	log.Info("starting llama server...", "model", modelName, "port", port)
+	log.Info("starting llama server... (this may take a while)", "model", modelName, "port", port)
 
 	cmd := exec.Command("llama", "server", "-hf", modelName, "--port", strconv.Itoa(port))
 
