@@ -121,7 +121,7 @@ func llamaRuntime(port int) {
 		log.Info("benchmark results", "tps", tps)
 	}
 
-	if tps < 30000 {
+	if tps < 300 {
 		log.Warn("weak performance detected, falling back to andyAPI")
 		andyAPI(port, key)
 		return
