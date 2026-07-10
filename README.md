@@ -271,7 +271,7 @@ To run **andy-router** as the LLM backend for a **Mindcraft-CE** bot, you can co
 2. **Configure Bot Profile**:
    Copy the json config (or merge its settings) into the `profiles/` directory of your Mindcraft-CE project (e.g., `profiles/profile.json`).
    
-   > [!IMPORTANT]
+   > [!WARNING]
    > The `"name"` field in your profile JSON must exactly match the Minecraft username of the account your bot is using. Change `"andy-router"` in the template to your bot's actual in-game name to avoid communication issues.
 
 3. **Launch the Bot**:
