@@ -23,7 +23,7 @@ const (
 	White  = "\033[37m"
 )
 
-const Version = "1.1.0"
+const Version = "1.1.1"
 
 var port int = 8000
 var key string = ""
