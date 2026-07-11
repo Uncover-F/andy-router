@@ -2,7 +2,7 @@ package api
 
 import (
 	"bytes"
-	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -36,13 +36,13 @@ func VerifyAndyKey(key string) (bool, error) {
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return false, errors.New("unable to read response body: " + err.Error())
+		return false, fmt.Errorf("unable to read response body: %w", err)
 	}
 
 	// Validate API request
 	if resp.StatusCode == http.StatusUnauthorized ||
 		resp.StatusCode == http.StatusForbidden {
-		return false, errors.New("invalid Andy API key: " + string(body))
+		return false, fmt.Errorf("invalid Andy API key: %s", string(body))
 	}
 
 	return true, nil

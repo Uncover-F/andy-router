@@ -1,7 +1,7 @@
 package llama
 
 import (
-	"errors"
+	"fmt"
 	"os/exec"
 	"runtime"
 )
@@ -27,7 +27,7 @@ func InstallLlama() error {
 	case "windows":
 		err = installWindows()
 	default:
-		err = errors.New("unsupported OS: " + runtime.GOOS)
+		err = fmt.Errorf("unsupported OS: %s", runtime.GOOS)
 	}
 
 	return err

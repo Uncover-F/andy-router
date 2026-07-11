@@ -2,7 +2,7 @@ package llama
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"os/exec"
 )
 
@@ -29,7 +29,7 @@ func Benchmark() (int, error) {
 	// Parse results
 	var results []BenchResult
 	if err := json.Unmarshal(output, &results); err != nil {
-		return 0, err
+		return 0, fmt.Errorf("failed to unmarshal benchmark results: %w", err)
 	}
 	for _, r := range results {
 		if r.NGen > 0 {
@@ -37,5 +37,5 @@ func Benchmark() (int, error) {
 		}
 	}
 
-	return 0, errors.New("no generation benchmark results found")
+	return 0, fmt.Errorf("no generation benchmark results found")
 }
