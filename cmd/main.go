@@ -20,7 +20,7 @@ const (
 	Blue   = "\033[34m"
 	Purple = "\033[35m"
 	Cyan   = "\033[36m"
-	white  = "\033[37m"
+	White  = "\033[37m"
 )
 
 const Version = "1.1.0"
@@ -51,6 +51,9 @@ func main() {
 			if i+1 >= len(os.Args) {
 				log.Fatal("missing value for --key: expected a key string")
 			}
+			if len(os.Args[i+1]) > 0 && os.Args[i+1][0] == '-' {
+				log.Fatalf("invalid value for --key: %q looks like an option", os.Args[i+1])
+			}
 			key = os.Args[i+1]
 			i++
 		case "--api":
@@ -71,6 +74,10 @@ func main() {
 				log.Fatalf("invalid model name %q: must be one of: Andy-4.2-Micro, Andy-4.2-Air, Andy-4.2", val)
 			}
 			i++
+		default:
+			log.Error(Red + "unknown option " + os.Args[i] + Reset)
+			printTruncatedHelp()
+			os.Exit(1)
 		}
 	}
 	if forceAPI && model != "" {
@@ -187,14 +194,33 @@ func printHelp() {
 	// --model, -m MODEL   Specify a model to use (bypasses auto-detection)
 	// --help, -h          Show this help message
 
-	fmt.Println(Red + "andy-router-" + Version + " - made by @Uncover-F" + Reset)
-	fmt.Println(Red + "discord support: https://discord.gg/mindcraft-ce" + Reset)
+	fmt.Println(Green + "andy-router-" + Version + " - made by @Uncover-F" + Reset)
+	fmt.Println(Green + "discord support: https://discord.gg/mindcraft-ce" + Reset)
 	fmt.Println("")
-	fmt.Println(Blue + "andy-router [--port PORT] [--key KEY] [--api] [--model MODEL] [--help]" + Reset)
+	fmt.Println(Blue + "./andy-router [--port PORT] [--key KEY] [--api] [--model MODEL] [--help]" + Reset)
 	fmt.Println("")
 	fmt.Println("--port PORT" + Yellow + "         Local port to bind to (default: 8000)" + Reset)
 	fmt.Println("--key KEY" + Yellow + "           Optional Andy API key" + Reset)
 	fmt.Println("--api" + Yellow + "               Force using the Andy API regardless of compute" + Reset)
 	fmt.Println("--model, -m MODEL" + Yellow + "   Specify a model to use (bypasses auto-detection)" + Reset)
 	fmt.Println("--help, -h" + Yellow + "          Show this help message" + Reset)
+}
+
+func printTruncatedHelp() {
+	// andy-router-v1.1.0 - made by @Uncover-F
+	// discord support: https://discord.gg/mindcraft-ce
+
+	// Usage:
+	// andy-router [--port PORT] [--key KEY] [--api] [--model MODEL] [--help]
+
+	// Options:
+	// --help, -h          Show help message
+
+	fmt.Println("")
+	fmt.Println(Green + "andy-router-" + Version + " - made by @Uncover-F" + Reset)
+	fmt.Println(Green + "discord support: https://discord.gg/mindcraft-ce" + Reset)
+	fmt.Println("")
+	fmt.Println(Blue + "./andy-router [--port PORT] [--key KEY] [--api] [--model MODEL] [--help]" + Reset)
+	fmt.Println("")
+	fmt.Println("--help, -h" + Yellow + "          Show help message" + Reset)
 }
