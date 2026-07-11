@@ -23,7 +23,7 @@ const (
 	White  = "\033[37m"
 )
 
-const Version = "1.1.5"
+const Version = "1.1.6"
 
 var port int = 8000
 var key string = ""
@@ -119,7 +119,7 @@ func runLlama() {
 		log.Info("installing llama.cpp... (this may take a while)")
 		err = llama.InstallLlama()
 		if err != nil {
-			log.Error("failed to install llama.cpp, falling back to andyAPI", "error", err)
+			log.Error("failed to install llama.cpp, falling back to andyAPI instead", "error", err)
 			runAndy()
 			return
 		}
@@ -139,7 +139,7 @@ func runLlama() {
 	// Benchmark system performance & select model
 	tps, err := llama.Benchmark()
 	if err != nil {
-		log.Error("failed to benchmark performance, falling back to andyAPI", "error", err)
+		log.Error("failed to benchmark performance, falling back to andyAPI instead", "error", err)
 		runAndy()
 		return
 	} else {
@@ -147,12 +147,13 @@ func runLlama() {
 	}
 	selectedModel := llama.SelectModel(tps)
 	if selectedModel == "" {
-		log.Warn("weak performance detected, falling back to andyAPI")
+		log.Warn("weak performance detected, falling back to andyAPI instead")
 		runAndy()
 		return
 	}
 
 	// Start llama server
+	log.Info("starting llama server...", "model", selectedModel)
 	err = llama.LlamaServer(selectedModel, port)
 	if err != nil {
 		log.Error("failed to start llama server, falling back to andyAPI instead", "error", err)
