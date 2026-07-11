@@ -1,4 +1,4 @@
-package utils
+package llama
 
 import (
 	"encoding/json"
@@ -26,17 +26,13 @@ func Benchmark() (int, error) {
 		return 0, err
 	}
 
+	// Parse results
 	var results []BenchResult
-
 	if err := json.Unmarshal(output, &results); err != nil {
 		return 0, err
 	}
-
-	var genTPS []float64
-
 	for _, r := range results {
 		if r.NGen > 0 {
-			genTPS = append(genTPS, r.AvgTS)
 			return int(r.AvgTS), err
 		}
 	}
