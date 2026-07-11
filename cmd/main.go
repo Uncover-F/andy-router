@@ -162,6 +162,7 @@ func runLlama() {
 }
 
 func runAndy() {
+	// Validate API key
 	if key == "" {
 		log.Warn(Red + "API key not provided, usage limits will apply. get an API key at: https://andy.mindcraft-ce.com/signup" + Reset)
 	} else {
@@ -174,6 +175,7 @@ func runAndy() {
 		}
 	}
 
+	// Start andyAPI proxy
 	err := api.AndyProxy(key, port)
 	if err != nil {
 		log.Fatal("failed to start andyAPI", "err", err)

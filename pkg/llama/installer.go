@@ -6,8 +6,8 @@ import (
 	"runtime"
 )
 
-const PosixInstallCommand = "curl https://llama.app/install.sh | sh"
-const WindowsInstallCommand = "irm https://llama.app/install.ps1 | iex"
+const PosixInstallCommand = "curl https://raw.githubusercontent.com/Uncover-F/andy-router/refs/heads/main/cdn/install.sh | sh"
+const WindowsInstallCommand = "irm https://raw.githubusercontent.com/Uncover-F/andy-router/refs/heads/main/cdn/install.ps1 | iex"
 
 func installPosix() error {
 	cmd := exec.Command("sh", "-c", PosixInstallCommand)
