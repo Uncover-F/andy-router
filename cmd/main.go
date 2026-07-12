@@ -79,7 +79,7 @@ func main() {
 	}
 
 	if model == "" {
-		if v.Total/1024/1024/1024 > 6 {
+		if v.Total >= llama.MinimumMemory*1024*1024*1024 {
 			runLlama()
 		} else {
 			log.Warn("insufficient memory, falling back to andyAPI instead", "memory", v.Total/1024/1024/1024)

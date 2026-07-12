@@ -6,6 +6,9 @@ import (
 	"github.com/charmbracelet/log"
 )
 
+// Global constants (across all functions)
+const MinimumMemory uint64 = 6 // minimum memory required to use llama.cpp
+
 func SelectModel() (selectedModel string, selectedQuant string, err error) {
 	// selectedModel "" (zero value) = use to andyAPI
 	// selectedQuant "" (zero value) = let llama.cpp decide (do not specify)
