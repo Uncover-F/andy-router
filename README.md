@@ -207,9 +207,9 @@ andy-router --api
 Specify a custom local model to run, bypassing auto-detection.
 
 Allowed values are:
-* `micro` (resolves to `Mindcraft-CE/Andy-4.2-Micro-GGUF`)
-* `air` (resolves to `Mindcraft-CE/Andy-4.2-Air-GGUF`)
-* `ye` (resolves to `Mindcraft-CE/Andy-4.2-GGUF`)
+* `Andy-4.2-Micro` (resolves to `Mindcraft-CE/Andy-4.2-Micro-GGUF`)
+* `Andy-4.2-Air` (resolves to `Mindcraft-CE/Andy-4.2-Air-GGUF`)
+* `Andy-4.2` (resolves to `Mindcraft-CE/Andy-4.2-GGUF`)
 
 > [!IMPORTANT]
 > The `--model` flag cannot be used at the same time as `--api` because these models are only supported for local inference. If you specify both, the router will fail with a configuration conflict error.
