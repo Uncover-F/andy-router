@@ -1,4 +1,4 @@
-# andy-router
+# andy-router 🧠
 
 **andy-router** is a lightweight OpenAI-compatible router that simplifies using **Andy models** and other models from the **Mindcraft ecosystem**.
 
@@ -21,44 +21,11 @@ Instead of manually choosing models, configuring local runtimes, managing downlo
   http://127.0.0.1:8000/v1/chat/completions
   ```
 
-* 🔀 **Automatic routing**
-
-  * Clients can simply use:
-
-    ```json
-    {
-      "model": "auto"
-    }
-    ```
-
-  * andy-router handles the actual model selection.
-
-* 💻 **Local inference support**
-
-  * Uses llama.cpp for local Andy models.
-  * Automatically installs required components when needed.
-  * Benchmarks performance before selecting a model.
-
-* ☁️ **Andy API fallback**
-
-  * Systems that cannot efficiently run local models automatically use:
-
-    ```
-    https://andy.mindcraft-ce.com/api/
-    ```
-
-  * Optional API key support for authenticated requests.
-
-* 🔑 **API key validation**
-
-  * Validates provided Andy API keys before starting.
-  * Prevents running with invalid credentials.
-
 ---
 
-## Installation
+## Installation ⬇️
 
-## Downloads
+## Downloads (manual)
 
 Pre-built binaries are available for Windows, macOS, and Linux.
 
@@ -80,13 +47,13 @@ After downloading:
 Make the binary executable:
 
 ```bash
-chmod +x andy-router
+chmod +x andy-router-yourdist-yourarch
 ```
 
 Run:
 
 ```bash
-./andy-router
+./andy-router-yourdist-yourarch
 ```
 
 ### Windows
@@ -94,7 +61,7 @@ Run:
 Run:
 
 ```powershell
-andy-router-windows-amd64.exe
+andy-router-windows-yourarch.exe
 ```
 
 ---
@@ -251,34 +218,13 @@ Simply use:
 }
 ```
 
----
+Currently focused on Andy models:
 
-## OpenAI Client Configuration
+* `Mindcraft-CE/Andy-4.2-Micro-GGUF`
+* `Mindcraft-CE/Andy-4.2-Air-GGUF`
+* `Mindcraft-CE/Andy-4.2-GGUF`
 
-andy-router works with OpenAI-compatible clients.
-
-Example:
-
-```python
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="http://127.0.0.1:8000/v1",
-    api_key="unused"
-)
-
-response = client.chat.completions.create(
-    model="auto",
-    messages=[
-        {
-            "role": "user",
-            "content": "Hello!"
-        }
-    ]
-)
-
-print(response.choices[0].message.content)
-```
+More models may be supported in the future.
 
 ---
 
@@ -289,7 +235,7 @@ To run **andy-router** as the LLM backend for a **Mindcraft-CE** bot, you can co
 ### Example profile.json
 ```json
 {
-    "name": "andy-router",
+    "name": "andy",
 
     "model": {
         "api": "vllm",
@@ -309,7 +255,7 @@ To run **andy-router** as the LLM backend for a **Mindcraft-CE** bot, you can co
 2. **Configure Bot Profile**:
    Copy the json config (or merge its settings) into the `profiles/` directory of your Mindcraft-CE project (e.g., `profiles/profile.json`).
    
-   > The `"name"` field in your profile JSON must exactly match the Minecraft username of the account your bot is using. Change `"andy-router"` in the template to your bot's actual in-game name to avoid communication issues.
+   > The `"name"` field in your profile JSON must exactly match the Minecraft username of the account your bot is using. Change `"andy"` in the template to your bot's actual in-game name to avoid communication issues.
 
 3. **Launch the Bot**:
    Run the bot from the Mindcraft-CE project directory using the `--profiles` flag:
@@ -330,18 +276,6 @@ Using AI models often requires knowing:
 andy-router removes those decisions.
 
 Applications connect to one simple OpenAI-compatible endpoint, and the router handles the rest.
-
----
-
-## Supported Models
-
-Currently focused on Andy models:
-
-* `Mindcraft-CE/Andy-4.2-Micro-GGUF`
-* `Mindcraft-CE/Andy-4.2-Air-GGUF`
-* `Mindcraft-CE/Andy-4.2-GGUF`
-
-More models may be supported in the future.
 
 ---
 
