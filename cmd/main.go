@@ -23,7 +23,7 @@ const (
 	White  = "\033[37m"
 )
 
-const Version = "1.1.8"
+const Version = "1.1.9"
 
 // Global variables (inside main.go)
 var port int = 8000
@@ -160,7 +160,7 @@ func runAndy() {
 }
 
 func printHelp() {
-	// andy-router-v1.1.8 - made by @Uncover-F
+	// andy-router-v1.1.9 - made by @Uncover-F
 	// discord support: https://discord.gg/mindcraft-ce
 
 	// Usage:
