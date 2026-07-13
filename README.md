@@ -287,6 +287,14 @@ See the repository license for details.
 
 Made by **@Uncover-F**
 
+<a href="https://www.star-history.com/?repos=Uncover-F%2Fandy-router&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Uncover-F/andy-router&type=date&theme=dark&legend=top-left&sealed_token=-9cAfIpSOwhBp29PybG3gVjUmuREprRXLrXjTcBKNgOhDQAc5uZ3Voz4nPbu43pidCIiZfy3WFZCZZP-ZurUhRJwOsoB7ae8hq-Gm5fdpx8ur99hP7HdJA" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Uncover-F/andy-router&type=date&legend=top-left&sealed_token=-9cAfIpSOwhBp29PybG3gVjUmuREprRXLrXjTcBKNgOhDQAc5uZ3Voz4nPbu43pidCIiZfy3WFZCZZP-ZurUhRJwOsoB7ae8hq-Gm5fdpx8ur99hP7HdJA" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Uncover-F/andy-router&type=date&legend=top-left&sealed_token=-9cAfIpSOwhBp29PybG3gVjUmuREprRXLrXjTcBKNgOhDQAc5uZ3Voz4nPbu43pidCIiZfy3WFZCZZP-ZurUhRJwOsoB7ae8hq-Gm5fdpx8ur99hP7HdJA" />
+ </picture>
+</a>
+
 Mindcraft CE community support:
 
 https://discord.gg/mindcraft-ce
