@@ -187,13 +187,13 @@ Allowed values are:
 Example:
 
 ```bash
-andy-router --model micro
+andy-router --model Andy-4.2-Micro
 ```
 
 Or using the `-m` shorthand:
 
 ```bash
-andy-router -m air
+andy-router -m Andy-4.2-Air
 ```
 
 ---
