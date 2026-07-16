@@ -45,13 +45,14 @@ const (
 	White  = "\033[37m"
 )
 
-const Version = "1.2.1"
+const Version = "1.2.2"
 
 // Global variables (inside main.go)
 var port int = 8000
-var key string = ""
-var model string = ""
-var forceAPI bool = false
+var key string
+var model string
+var forceAPI bool
+var showVersion bool
 
 func main() {
 	// Prase CLI flags
@@ -59,6 +60,7 @@ func main() {
 	pflag.StringVar(&key, "key", "", "andyPI key")
 	pflag.BoolVar(&forceAPI, "api", false, "force andyAPI")
 	pflag.StringVarP(&model, "model", "m", "", "model to use")
+	pflag.BoolVarP(&showVersion, "version", "v", false, "show version information")
 
 	pflag.Usage = printHelp
 	pflag.Parse()
@@ -66,6 +68,11 @@ func main() {
 	// Validate CLI Inputs
 	if port < 1 || port > 65535 {
 		log.Fatalf("invalid port %v: must be a number between 1 and 65535", port)
+	}
+
+	if showVersion {
+		fmt.Println(Green + "andy-router version " + Version + Reset)
+		return
 	}
 
 	switch model {
@@ -182,19 +189,6 @@ func runAndy() {
 }
 
 func printHelp() {
-	// andy-router-v1.2.1 - made by @Uncover-F
-	// discord support: https://discord.gg/mindcraft-ce
-
-	// Usage:
-	// andy-router [--port PORT] [--key KEY] [--api] [--model MODEL] [--help]
-
-	// Options:
-	// --port PORT         Local port to bind to (default: 8000)
-	// --key KEY           Optional Andy API key
-	// --api               Force using the Andy API regardless of compute
-	// --model, -m MODEL   Specify a model to use (bypasses auto-detection)
-	// --help, -h          Show this help message
-
 	fmt.Println(Green + "andy-router-" + Version + " - made by @Uncover-F" + Reset)
 	fmt.Println(Green + "discord support: https://discord.gg/mindcraft-ce" + Reset)
 	fmt.Println("")

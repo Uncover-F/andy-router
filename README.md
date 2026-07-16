@@ -1,5 +1,5 @@
 # andy-router 🧠
-![Version Badge](https://img.shields.io/badge/version-1.2.1-blue) ![License Badge](https://img.shields.io/badge/license-mit-yellow) ![Language Badge](https://img.shields.io/badge/language-go-green)
+![Version Badge](https://img.shields.io/badge/version-1.2.2-blue) ![License Badge](https://img.shields.io/badge/license-mit-yellow) ![Language Badge](https://img.shields.io/badge/language-go-green)
 
 
 
