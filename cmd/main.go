@@ -198,5 +198,6 @@ func printHelp() {
 	fmt.Println("--key KEY" + Yellow + "           Optional Andy API key" + Reset)
 	fmt.Println("--api" + Yellow + "               Force using the Andy API regardless of compute" + Reset)
 	fmt.Println("--model, -m MODEL" + Yellow + "   Specify a model to use (bypasses auto-detection)" + Reset)
+	fmt.Println("--version, -v" + Yellow + "          Show version information" + Reset)
 	fmt.Println("--help, -h" + Yellow + "          Show help message" + Reset)
 }
