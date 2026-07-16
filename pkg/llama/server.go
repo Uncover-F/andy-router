@@ -29,13 +29,13 @@ import (
 )
 
 // * BLOCKING * //
-func LlamaServer(modelName string, quantization string, port int) error {
+func LlamaServer(modelName string, quantization string, contextLength int, port int) error {
 	var cmd *exec.Cmd
 
 	if quantization == "" {
-		cmd = exec.Command("llama", "server", "-hf", modelName, "--port", strconv.Itoa(port), "--chat-template", "chatml")
+		cmd = exec.Command("llama", "server", "-hf", modelName, "--port", strconv.Itoa(port), "--chat-template", "chatml", "-c", strconv.Itoa(contextLength))
 	} else {
-		cmd = exec.Command("llama", "server", "-hf", modelName, "--hf-file", quantization, "--port", strconv.Itoa(port), "--chat-template", "chatml")
+		cmd = exec.Command("llama", "server", "-hf", modelName, "--hf-file", quantization, "--port", strconv.Itoa(port), "--chat-template", "chatml", "-c", strconv.Itoa(contextLength))
 	}
 
 	// Print output

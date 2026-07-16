@@ -31,29 +31,29 @@ import (
 // Global constants (across all functions)
 const MinimumMemory uint64 = 6 // minimum memory required to use llama.cpp
 
-func SelectModel() (selectedModel string, selectedQuant string, err error) {
+func SelectModel() (selectedModel string, selectedQuant string, selectedContextLength int, err error) {
 	// selectedModel "" (zero value) = use to andyAPI
 	// selectedQuant "" (zero value) = let llama.cpp decide (do not specify)
 
 	// Perform benchmark
 	tps, err := Benchmark()
 	if err != nil {
-		return "", "", fmt.Errorf("failed to benchmark performance: %w", err)
+		return "", "", 0, fmt.Errorf("failed to benchmark performance: %w", err)
 	}
 
 	// Route between models
 	// TODO: Add logic for routing between different models/quantizations based on benchmark results
 	if tps < 300 {
 		log.Info("router: model selected", "model", "none", "tps", tps)
-		return "", "", nil
+		return "", "", 0, nil
 	} else if tps < 700 {
 		log.Info("router: model selected", "model", "Mindcraft-CE/Andy-4.2-Micro-GGUF", "tps", tps)
-		return "Mindcraft-CE/Andy-4.2-Micro-GGUF", "", nil
+		return "Mindcraft-CE/Andy-4.2-Micro-GGUF", "", 32000, nil
 	} else if tps < 1200 {
 		log.Info("router: model selected", "model", "Mindcraft-CE/Andy-4.2-Air-GGUF", "tps", tps)
-		return "Mindcraft-CE/Andy-4.2-Air-GGUF", "", nil
+		return "Mindcraft-CE/Andy-4.2-Air-GGUF", "", 32000, nil
 	} else {
 		log.Info("router: model selected", "model", "Mindcraft-CE/Andy-4.2-GGUF", "tps", tps)
-		return "Mindcraft-CE/Andy-4.2-GGUF", "", nil
+		return "Mindcraft-CE/Andy-4.2-GGUF", "", 32000, nil
 	}
 }

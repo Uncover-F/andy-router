@@ -129,7 +129,7 @@ func runLlama() {
 	// Handle user-specified models
 	if model != "" {
 		log.Info("using user-specified model", "model", model)
-		err = llama.LlamaServer(model, "", port)
+		err = llama.LlamaServer(model, "", 32000, port)
 		if err != nil {
 			log.Error("failed to start llama server, falling back to andyAPI instead", "error", err)
 			runAndy()
@@ -138,7 +138,7 @@ func runLlama() {
 	}
 
 	// Select model using router
-	selectedModel, selectedQuant, err := llama.SelectModel()
+	selectedModel, selectedQuant, selectedContextLength, err := llama.SelectModel()
 	if err != nil {
 		log.Error("failed to select model, falling back to andyAPI instead", "error", err)
 		runAndy()
@@ -152,7 +152,7 @@ func runLlama() {
 
 	// Start llama server
 	log.Info("starting llama server...", "model", selectedModel)
-	err = llama.LlamaServer(selectedModel, selectedQuant, port)
+	err = llama.LlamaServer(selectedModel, selectedQuant, selectedContextLength, port)
 	if err != nil {
 		log.Error("failed to start llama server, falling back to andyAPI instead", "error", err)
 		runAndy()
