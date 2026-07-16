@@ -40,15 +40,15 @@ func AndyProxy(key string, port int) error {
 		return err
 	}
 
-	proxy := httputil.NewSingleHostReverseProxy(target)
-
-	proxy.Rewrite = func(r *httputil.ProxyRequest) {
-		r.SetURL(target)
-		r.Out.Host = target.Host
-		r.Out.Header.Set("Content-Type", "application/json")
-		if key != "" {
-			r.Out.Header.Set("Authorization", "Bearer "+key)
-		}
+	proxy := &httputil.ReverseProxy{
+		Rewrite: func(r *httputil.ProxyRequest) {
+			r.SetURL(target)
+			r.Out.Host = target.Host
+			r.Out.Header.Set("Content-Type", "application/json")
+			if key != "" {
+				r.Out.Header.Set("Authorization", "Bearer "+key)
+			}
+		},
 	}
 
 	server := &http.Server{
