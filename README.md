@@ -1,38 +1,60 @@
 # andy-router 🧠
-![Version Badge](https://img.shields.io/badge/version-1.2.2-blue) ![License Badge](https://img.shields.io/badge/license-mit-yellow) ![Language Badge](https://img.shields.io/badge/language-go-green)
 
+![Version Badge](https://img.shields.io/badge/version-1.2.2-blue) ![License Badge](https://img.shields.io/badge/license-MIT-yellow) ![Language Badge](https://img.shields.io/badge/language-Go-green)
 
+**andy-router** is a lightweight, OpenAI-compatible model router for **Andy models** and the **Mindcraft ecosystem**.
 
-**andy-router** is a lightweight OpenAI-compatible router that simplifies using **Andy models** and other models from the **Mindcraft ecosystem**.
+Instead of manually selecting models, configuring runtimes, downloading files, or managing API endpoints, andy-router automatically determines the best way to run Andy based on your system capabilities.
 
-Instead of manually choosing models, configuring local runtimes, managing downloads, or setting up API endpoints, andy-router automatically decides the best way to run Andy based on your system capabilities.
+It provides a single OpenAI-compatible endpoint that applications can connect to while handling model selection, local inference, and API fallback automatically.
+
+---
 
 ## Features
 
-* 🚀 **Automatic model selection**
+### 🚀 Automatic model selection
 
-  * Detects your hardware capabilities and selects the best available Andy model.
-  * Runs larger local models when your machine can handle them.
-  * Falls back to the Andy API when local inference is not practical.
+* Detects your hardware capabilities.
+* Selects the best available Andy model for your system.
+* Uses larger local models when your machine can handle them.
+* Falls back to the Andy API when local inference is not practical.
 
-* 🧠 **OpenAI-compatible API**
+### 🧠 OpenAI-compatible API
 
-  * Works with tools and applications that support the OpenAI API format.
-  * Provides a local endpoint:
+Works with applications that support the OpenAI API format.
 
-  ```
-  http://127.0.0.1:8000/v1/chat/completions
-  ```
+Local endpoint:
+
+```text
+http://127.0.0.1:8000/v1/chat/completions
+```
 
 ---
 
 ## Installation ⬇️
 
-## Downloads (manual)
+### One-line installer
 
-Pre-built binaries are available for Windows, macOS, and Linux.
+Install automatically:
 
-Download the latest release for your platform:
+```bash
+curl -fsSL https://raw.githubusercontent.com/Uncover-F/andy-router/main/cdn/rinstall.sh | sh
+```
+
+The installer will:
+
+* Detect your operating system and architecture.
+* Download the correct binary.
+* Install it to `~/.local/bin`.
+* Configure instructions for adding it to your `PATH` if needed.
+
+> Windows PowerShell installer support is planned.
+
+---
+
+## Manual Downloads
+
+Pre-built binaries are available for:
 
 | Platform | Architecture  | File                            |
 | -------- | ------------- | ------------------------------- |
@@ -43,20 +65,18 @@ Download the latest release for your platform:
 | macOS    | Intel         | `andy-router-darwin-amd64`      |
 | macOS    | Apple Silicon | `andy-router-darwin-arm64`      |
 
-After downloading:
-
 ### Linux / macOS
 
 Make the binary executable:
 
 ```bash
-chmod +x andy-router-yourdist-yourarch
+chmod +x andy-router-your-platform-your-architecture
 ```
 
 Run:
 
 ```bash
-./andy-router-yourdist-yourarch
+./andy-router-your-platform-your-architecture
 ```
 
 ### Windows
@@ -64,8 +84,17 @@ Run:
 Run:
 
 ```powershell
-andy-router-windows-yourarch.exe
+andy-router-windows-your-architecture.exe
 ```
+
+---
+
+## Requirements
+
+* Linux, macOS, or Windows
+* `curl` (only required for the installer)
+* A supported local inference backend for local models
+* An Andy API key is optional
 
 ---
 
@@ -102,7 +131,7 @@ andy-router
 
 The API will be available at:
 
-```
+```text
 http://127.0.0.1:8000
 ```
 
@@ -116,13 +145,13 @@ curl http://127.0.0.1:8000/v1/chat/completions \
 
 ---
 
-## Options
+# Command Options
 
-```
+```text
 andy-router [options]
 ```
 
-### `--port`
+## `--port`
 
 Change the local API port.
 
@@ -134,13 +163,13 @@ andy-router --port 3344
 
 Runs:
 
-```
+```text
 http://127.0.0.1:3344
 ```
 
 ---
 
-### `--key`
+## `--key`
 
 Provide an Andy API key.
 
@@ -154,15 +183,17 @@ Without a key, the router uses the public Andy API limits.
 
 Get an API key:
 
-```
+```text
 https://andy.mindcraft-ce.com/signup
 ```
 
 ---
 
-### `--api`
+## `--api`
 
-Force the router to use the Andy API, bypassing all compute capability and benchmark checks.
+Force API mode.
+
+This disables local model detection and always routes requests through the Andy API.
 
 Example:
 
@@ -172,48 +203,49 @@ andy-router --api
 
 ---
 
-### `--model` or `-m`
+## `--model` / `-m`
 
-Specify a custom local model to run, bypassing auto-detection.
+Select a specific local model instead of automatic selection.
 
-Allowed values are:
-* `Andy-4.2-Micro` (resolves to `Mindcraft-CE/Andy-4.2-Micro-GGUF`)
-* `Andy-4.2-Air` (resolves to `Mindcraft-CE/Andy-4.2-Air-GGUF`)
-* `Andy-4.2` (resolves to `Mindcraft-CE/Andy-4.2-GGUF`)
+Supported models:
 
-> [!IMPORTANT]
-> The `--model` flag cannot be used at the same time as `--api` because these models are only supported for local inference. If you specify both, the router will fail with a configuration conflict error.
+| Name             | Resolved Model                     |
+| ---------------- | ---------------------------------- |
+| `Andy-4.2-Micro` | `Mindcraft-CE/Andy-4.2-Micro-GGUF` |
+| `Andy-4.2-Air`   | `Mindcraft-CE/Andy-4.2-Air-GGUF`   |
+| `Andy-4.2`       | `Mindcraft-CE/Andy-4.2-GGUF`       |
 
 Example:
 
 ```bash
-andy-router --model Andy-4.2-Micro
+andy-router --model Andy-4.2-Air
 ```
 
-Or using the `-m` shorthand:
+or:
 
 ```bash
 andy-router -m Andy-4.2-Air
 ```
 
+> [!IMPORTANT]
+> `--model` cannot be combined with `--api`. Local models are only available through local inference.
+
 ---
 
-## Model Selection
+# Model Selection
 
-When running locally, andy-router automatically chooses a model based on benchmark results.
+When running locally, andy-router benchmarks your system and automatically chooses the most suitable model.
 
-Example routing:
+Example:
 
-| Performance     | Model          |
-| --------------- | -------------- |
-| Low performance | Andy API       |
-| Moderate        | Andy-4.2-Micro |
-| Good            | Andy-4.2-Air   |
-| High            | Andy-4.2       |
+| System Performance | Selected Model |
+| ------------------ | -------------- |
+| Low performance    | Andy API       |
+| Moderate           | Andy-4.2-Micro |
+| Good               | Andy-4.2-Air   |
+| High               | Andy-4.2       |
 
-Applications do not need to know the exact model name.
-
-Simply use:
+Applications should simply request:
 
 ```json
 {
@@ -221,25 +253,25 @@ Simply use:
 }
 ```
 
-Currently focused on Andy models:
+Currently supported models:
 
 * `Mindcraft-CE/Andy-4.2-Micro-GGUF`
 * `Mindcraft-CE/Andy-4.2-Air-GGUF`
 * `Mindcraft-CE/Andy-4.2-GGUF`
 
-More models may be supported in the future.
+More models may be added in future releases.
 
 ---
 
-## Mindcraft-CE Integration
+# Mindcraft-CE Integration
 
-To run **andy-router** as the LLM backend for a **Mindcraft-CE** bot, you can configure your bot's profile to route request completions to the router's local endpoint.
+andy-router can be used as the LLM backend for a **Mindcraft-CE** bot.
 
-### Example profile.json
+Example `profile.json`:
+
 ```json
 {
     "name": "andy",
-
     "model": {
         "api": "vllm",
         "model": "auto",
@@ -248,41 +280,52 @@ To run **andy-router** as the LLM backend for a **Mindcraft-CE** bot, you can co
 }
 ```
 
-### Steps to Use
+## Setup
 
-1. **Start the Router**:
-   Ensure `andy-router` is running:
-   ```bash
-   andy-router
-   ```
-2. **Configure Bot Profile**:
-   Copy the json config (or merge its settings) into the `profiles/` directory of your Mindcraft-CE project (e.g., `profiles/profile.json`).
-   
-   > The `"name"` field in your profile JSON must exactly match the Minecraft username of the account your bot is using. Change `"andy"` in the template to your bot's actual in-game name to avoid communication issues.
+### 1. Start the router
 
-3. **Launch the Bot**:
-   Run the bot from the Mindcraft-CE project directory using the `--profiles` flag:
-   ```bash
-   node main.js --profiles ./profiles/profile.json
-   ```
+```bash
+andy-router
+```
+
+### 2. Configure your bot profile
+
+Place the profile inside your Mindcraft-CE `profiles/` directory.
+
+The `"name"` field must exactly match your Minecraft username.
+
+Example:
+
+```json
+"name": "YourMinecraftUsername"
+```
+
+### 3. Launch Mindcraft-CE
+
+```bash
+node main.js --profiles ./profiles/profile.json
+```
+
 ---
 
-## Why use andy-router?
+# Why use andy-router?
 
-Using AI models often requires knowing:
+Using AI models usually requires answering:
 
 * Which model should I run?
 * Can my hardware handle it?
 * Should I use local inference or an API?
-* Which endpoint format does my application expect?
+* Which endpoint format does my application need?
 
 andy-router removes those decisions.
 
-Applications connect to one simple OpenAI-compatible endpoint, and the router handles the rest.
+Applications connect to one OpenAI-compatible endpoint, and the router handles the rest.
 
 ---
 
-## License
+# License
+
+andy-router is released under the MIT License.
 
 See the repository license for details.
 
