@@ -1,6 +1,6 @@
 # andy-router 🧠
 
-![Version Badge](https://img.shields.io/badge/version-1.2.2-blue) ![License Badge](https://img.shields.io/badge/license-MIT-yellow) ![Language Badge](https://img.shields.io/badge/language-Go-green)
+![Version Badge](https://img.shields.io/badge/version-1.2.3-blue) ![License Badge](https://img.shields.io/badge/license-MIT-yellow) ![Language Badge](https://img.shields.io/badge/language-Go-green)
 
 **andy-router** is a lightweight, OpenAI-compatible model router for **Andy models** and the **Mindcraft ecosystem**.
 

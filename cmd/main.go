@@ -45,7 +45,7 @@ const (
 	White  = "\033[37m"
 )
 
-const Version = "1.2.2"
+const Version = "1.2.3"
 
 // Global variables (inside main.go)
 var port int = 8000
@@ -65,7 +65,7 @@ func main() {
 	pflag.Usage = printHelp
 	pflag.Parse()
 
-	// Validate CLI Inputs
+	// Handle/Validate CLI Inputs
 	if port < 1 || port > 65535 {
 		log.Fatalf("invalid port %v: must be a number between 1 and 65535", port)
 	}
@@ -101,7 +101,7 @@ func main() {
 		return
 	}
 
-	// Verify the client is capable of running llama.cpp
+	// Verify that the client is capable of running llama.cpp
 	v, err := mem.VirtualMemory()
 	if err != nil {
 		log.Fatal(err)

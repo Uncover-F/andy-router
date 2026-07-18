@@ -43,6 +43,7 @@ func Benchmark() (int, error) {
 		"--output", "json",
 	)
 
+	// Run benchmark
 	output, err := cmd.Output()
 	if err != nil {
 		return 0, err

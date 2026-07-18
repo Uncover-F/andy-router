@@ -32,7 +32,7 @@ import (
 const MinimumMemory uint64 = 6 // minimum memory required to use llama.cpp
 
 func SelectModel() (selectedModel string, selectedQuant string, selectedContextLength int, err error) {
-	// selectedModel "" (zero value) = use to andyAPI
+	// selectedModel "" (zero value) = use andyAPI
 	// selectedQuant "" (zero value) = let llama.cpp decide (do not specify)
 
 	// Perform benchmark
